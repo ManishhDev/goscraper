@@ -31,16 +31,17 @@ func main() {
 	}
 	prefork := os.Getenv("PREFORK") == "true"
 
-	app := fiber.New(fiber.Config{
-		Prefork:      prefork == "true",
-		ServerHeader: "GoScraper",
-		AppName:      "GoScraper v3.0",
-		JSONEncoder:  json.Marshal,
-		JSONDecoder:  json.Unmarshal,
-		ErrorHandler: func(c *fiber.Ctx, err error) error {
-			return utils.HandleError(c, err)
-		},
-	})
+app := fiber.New(fiber.Config{
+	Prefork:      prefork, // ✅ Just use the boolean directly
+	ServerHeader: "GoScraper",
+	AppName:      "GoScraper v3.0",
+	JSONEncoder:  json.Marshal,
+	JSONDecoder:  json.Unmarshal,
+	ErrorHandler: func(c *fiber.Ctx, err error) error {
+		return utils.HandleError(c, err)
+	},
+})
+
 
 	app.Use(recover.New())
 	app.Use(compress.New(compress.Config{
