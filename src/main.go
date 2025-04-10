@@ -29,10 +29,7 @@ func main() {
 	if globals.DevMode {
 		godotenv.Load()
 	}
-	prefork := os.Getenv("PREFORK")
-	if prefork == "" {
-		prefork = "true"
-	}
+	prefork := os.Getenv("PREFORK") == "true"
 
 	app := fiber.New(fiber.Config{
 		Prefork:      prefork == "true",
